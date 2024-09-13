@@ -1,4 +1,4 @@
-const { UsedDatabase } = require('./usedDatabase.js');
+const UsedDatabase = require('./usedDatabase.js');
 const { endDayEmail, successEmail } = require('./sendEmail.js');
 const puppeteer = require('puppeteer');
 const database = require('./database.js');

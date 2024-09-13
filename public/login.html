@@ -62,12 +62,23 @@
             window.exportedValues = { numDays, valueDays, active };
 
             // Send values to server (Node.js)
-            fetch('http://localhost:8080/update-active', {
+            fetch('http://localhost:8080/update-values', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(window.exportedValues)
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text().then(text => {
+                        alert(text);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         });
     </script>
