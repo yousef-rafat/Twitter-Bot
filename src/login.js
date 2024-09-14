@@ -28,7 +28,7 @@ async function login(days, howMuch) {
         if (!isDuplicate) {
             break;
         }
-    } while (await Used.compare(name, quote));
+    } while (await Used.compare(name, quote) || (name + quote).length > 45);
 
     const userAgent =
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
