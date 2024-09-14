@@ -1,5 +1,5 @@
 # Twitter (X) Bot
-> * Note: This repository is made for education purposes only *
+> * Note: This repository is made for education purposes only 
 
 ![twitter-bot](https://github.com/user-attachments/assets/0934475c-5f34-45ad-b509-bee4b032e3a5)
 
