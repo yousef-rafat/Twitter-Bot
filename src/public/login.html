@@ -43,13 +43,19 @@
           const value = times.value;
           if (value === '' || isNaN(value)) {
               warning.style.display = 'block';
+              return false;
           } else {
               warning.style.display = 'none';
+              return true;
           }
       }
 
       button.addEventListener('click', function() {
-            checkValidation();
+            let valid = checkValidation();
+
+            if (!valid) {
+                return;
+            }
 
             numDays = day / times.value;
             valueDays = days.value;
@@ -68,18 +74,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(window.exportedValues)
-            }).then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    return response.text().then(text => {
-                        alert(text);
-                    });
-                }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
         });
     </script>
 </body>
