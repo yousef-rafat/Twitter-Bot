@@ -34,11 +34,15 @@
       const times = document.getElementById('times');
       const warning = document.getElementById('warning');
 
+      // a day in miliseconds
       const day = 86400000;
-      let numDays;
-      let valueDays;
-      let active;
+      let numDays; // number of days
+      let howMuch; // how much posts per day
+      let active;  // checks if the button is clicked, activating the bot
+      let howPosts; // how much to post per day
 
+      // checks if the the choosed value is a number. if not a number, it won't proceed in activating the bot
+      // it also displays a warning message in case of a non-number input
       function checkValidation() {
           const value = times.value;
           if (value === '' || isNaN(value)) {
@@ -57,15 +61,17 @@
                 return;
             }
 
-            numDays = day / times.value;
-            valueDays = days.value;
-            active = true;
+            // get the values into the variables we will pass
+            numDays = days.value;  // number of days to post
+            howMuch = day / times.value; // how much to wait before posting
+            howPosts = times.value // how much to post per day
+            active = true; // as the button is clicked to activate. The bot gets active.
 
             console.log(numDays);
-            console.log(valueDays);
+            console.log(howMuch);
 
             // Store values in a global object
-            window.exportedValues = { numDays, valueDays, active };
+            window.exportedValues = { numDays, howMuch, howPosts, active };
 
             // Send values to server (Node.js)
             fetch('http://localhost:8080/update-values', {
