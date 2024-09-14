@@ -65,7 +65,7 @@ async function login(days, howMuch) {
         for (let j = 0; j < howMuch; j++) {
             for (let k = 0; k < 2; k++) {
 
-                await page.waitForSelector(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, { visible: true , timeout: 60000})
+                await page.waitForSelector(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, { visible: true , timeout: 100000})
                 await page.type(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, `//////\n${quote} \n\n\r~${name}`)
 
                 if (k === 0) {
@@ -83,7 +83,7 @@ async function login(days, howMuch) {
                     continue;
                 }
 
-                await page.waitForSelector('button[data-testid="tweetButton"]', {timeout: 60000, visible: true })
+                await page.waitForSelector('button[data-testid="tweetButton"]', {timeout: 100000, visible: true })
                 await page.click('button[data-testid="tweetButton"');
 
                 if (i === 0) {
