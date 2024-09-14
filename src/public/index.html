@@ -45,11 +45,14 @@
         const button = document.getElementById('submitBtn');
 
         button.addEventListener('click', function(event) {
+          // prevent the submitting the form
             event.preventDefault();
 
+            // get the value of the email and password
             const email = document.getElementById('inputEmail').value;
             const password = document.getElementById('inputPassword').value;
 
+            // sending a POST request to our website along with the values of email and password
             fetch('http://localhost:8080/signin', {
                 method: 'POST',
                 headers: {
@@ -57,7 +60,8 @@
                 },
                 body: JSON.stringify({email, password})
             })
-            .then(response => {
+            .then(response => { // because of the async nature.
+                                // the .then is made when to change the window when redirected
                 if (response.redirected) {
                     window.location.href = response.url;
                 } else {
@@ -65,7 +69,7 @@
                         alert(text);
                     });
                 }
-            })
+            }) //print out the error if any
             .catch(error => {
                 console.error('Error:', error);
             });
