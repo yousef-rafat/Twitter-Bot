@@ -88,8 +88,6 @@ async function login(days, howPosts, howMuch) {
                 // the reason why we requires loading is in puppeteer it likes to click and use elements that haven't loaded yet
                 // when reloaded almost all of the elements would be in the CPU register, so we will be able to write the tweet
 
-                await page.waitForNavigation({ waitUntil: 'networkidle2' });
-
                 try {
                     await page.waitForSelector(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, { visible: true , timeout: 100000}) // wait for the tweet selector
                     await page.type(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, `//////\n${quote} \n\n\r~${name}`) // write the tweet
@@ -110,8 +108,14 @@ async function login(days, howPosts, howMuch) {
                 }
 
                 // click the tweet button after waiting for it
-                await page.waitForSelector('button[data-testid="tweetButton"]', {timeout: 100000, visible: true })
-                await page.click('button[data-testid="tweetButton"');
+                try {
+                    await page.waitForSelector('button[data-testid="tweetButton"]', { visible: true })
+                    await page.click('button[data-testid="tweetButton"'); // write the tweet
+                } catch {
+                    await page.goto("https://x.com/compose/post/")
+                    console.log("Couldn't post the tweet")
+                    continue;
+                }
 
                 await sleep(howMuch); // sleep the program
             }
