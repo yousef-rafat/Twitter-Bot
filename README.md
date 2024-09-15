@@ -37,3 +37,6 @@ The user must create a database named "quotes" as it will be used in the scripts
 
 To see an example of the bot running, visit:
 https://x.com/TheWordlyWisdow
+
+## An example of the control website of the bot
+![Screenshot 2024-09-15 194830](https://github.com/user-attachments/assets/05595530-04fe-425b-9e0b-5736f879ea71)
