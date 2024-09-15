@@ -8,14 +8,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const twitter = "https://x.com/i/flow/login";
-
-async function login(days, howPosts, howMuch) {
-
+async function getData(User, Used) {
     let name, quote;
-
-    const User = new database;
-    const Used = new UsedDatabase;
 
     // get a sample and put them in variables.
     // if the variables are Duplicated or their length exceeds 45 words, get another sample
@@ -32,6 +26,20 @@ async function login(days, howPosts, howMuch) {
             break;
         }
     } while (await Used.compare(name, quote) || (name + quote).length > 45);
+
+    return [name, quote];
+}
+
+const twitter = "https://x.com/i/flow/login";
+
+async function login(days, howPosts, howMuch) {
+
+    let name, quote;
+
+    const User = new database;
+    const Used = new UsedDatabase;
+    
+    [name, quote] = await getData(User, Used);
 
     const userAgent =
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -67,7 +75,15 @@ async function login(days, howPosts, howMuch) {
 
     // this loop serves to create a schudle for the bot to tweet.
     for (let i = 0; i < days; i++){ // for how many days
+
+        if (i === 0) { // if it ran without errors, it will send an email to celebrate
+            successEmail();
+        } else if (i === (days - 1)) { // if it's the last day, it will send an email for renewing
+            endDayEmail();
+        }
+
         for (let j = 0; j < howPosts; j++) { // for how much tweets per day
+            [name, quote] = await getData(User, Used);
             for (let k = 0; k < 2; k++) { // this was fuzzy to get working and it requires it to reload for the tweet to happen
                 // the reason why we requires loading is in puppeteer it likes to click and use elements that haven't loaded yet
                 // when reloaded almost all of the elements would be in the CPU register, so we will be able to write the tweet
@@ -88,12 +104,6 @@ async function login(days, howPosts, howMuch) {
                 // click the tweet button after waiting for it
                 await page.waitForSelector('button[data-testid="tweetButton"]', {timeout: 100000, visible: true })
                 await page.click('button[data-testid="tweetButton"');
-
-                if (i === 0) { // if it ran without errors, it will send an email to celebrate
-                    successEmail();
-                } else if (i === (days - 1)) { // if it's the last day, it will send an email for renewing
-                    endDayEmail();
-                }
 
                 await sleep(howMuch); // sleep the program
             }

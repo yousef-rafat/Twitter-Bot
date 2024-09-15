@@ -73,7 +73,6 @@ app.get('/', (req, res) => {
 
 app.get('/bot', async (req, res) => {
     if (req.session.loggedIn) { // if the user is logged in
-        res.sendFile(path.join(__dirname, 'public', 'login.html')); // send them to the control page
         if (active) { // only start the bot when the user activates it
             try {
                 await getQuotes(); // get the quotes and add them to the database
@@ -83,6 +82,8 @@ app.get('/bot', async (req, res) => {
                 console.error('Error:', error);
                 res.status(500).send('An error occurred while processing your request.');
             }
+        } else {
+            res.sendFile(path.join(__dirname, 'public', 'login.html')); // send them to the control page
         }
     } else {
         res.redirect('/'); // if the user isn't logged in, pass them to the login page
