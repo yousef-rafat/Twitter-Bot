@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
+const option = { socketTimeoutMS: 3000000 };
+
 // create a class that will host all of our MongoDB functions
 class MongoDB {
     constructor() {
-        mongoose.connect('mongodb://localhost:27017/quotes') //host.docker.internal if you're uploading to Docker
+        mongoose.connect('mongodb://localhost:27017/quotes', option) //host.docker.internal if you're uploading to Docker
             .then(() => { // connect to the quotes database
                 console.log("Connection Successful");
             })

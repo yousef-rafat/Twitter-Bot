@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const database = require('./database.js');
 
+const option = { socketTimeoutMS: 3000000 };
+
 // the UsedDatabase will inherient from the other database its functionality
 class UsedDatabase extends database {
     constructor() {
         // we will connect to the same database, but a different collection
         super();
-        mongoose.connect('mongodb://localhost:27017/quotes') //host.docker.internal if you're uploading to Docker
+        mongoose.connect('mongodb://localhost:27017/quotes', option) //host.docker.internal if you're uploading to Docker
             .then(() => {
                 console.log("Connection Successful");
             })
