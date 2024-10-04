@@ -93,6 +93,13 @@ async function login(days, howPosts, howMuch) {
                 try {
                     await page.waitForSelector(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, { visible: true , timeout: 100000}) // wait for the tweet selector
                     await page.type(`div[class="css-175oi2r r-18u37iz r-184en5c"]`, `//////\n${quote} \n\n\r~${name}`) // write the tweet
+                    const hasText = await page.$eval('div[class="css-175oi2r r-18u37iz r-184en5c"]', el => el.textContent.trim().length > 0);
+
+                    if (!hasText) {
+                        k = k > 0 ? k -= 1 : k;
+                        continue;
+                    }
+
                 } catch {
                     await page.goto("https://x.com/compose/post/")
                     console.log("Couldn't post the tweet")
